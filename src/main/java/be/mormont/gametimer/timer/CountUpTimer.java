@@ -1,7 +1,5 @@
 package be.mormont.gametimer.timer;
 
-import be.mormont.gametimer.exceptions.TimerStateException;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 
