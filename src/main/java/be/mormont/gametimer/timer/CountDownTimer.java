@@ -28,7 +28,7 @@ public class CountDownTimer extends Timer {
     @Override
     public void start() {
         if (isStopped()) {
-            if(initial.getValue().minus(duration.getValue()).isNegative()) {
+            if(getRemainingDuration().isNegative()) {
                 throw new TimerExpiredException();
             }
             start.setValue(LocalDateTime.now());
@@ -38,13 +38,18 @@ public class CountDownTimer extends Timer {
         }
     }
 
+    private Duration getRemainingDuration() {
+        return initial.getValue().minus(duration.getValue());
+    }
+
     @Override
     public Duration humanDuration() {
-        return null;
+        Duration diff = getRemainingDuration();
+        return diff.isNegative() ? Duration.ZERO : diff;
     }
 
     @Override
     public boolean isExpired() {
-        return false;
+        return getRemainingDuration().isNegative();
     }
 }
