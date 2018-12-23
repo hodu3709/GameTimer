@@ -1,5 +1,7 @@
 package be.mormont.gametimer.timer;
 
+import be.mormont.gametimer.exceptions.TimerStateException;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -14,6 +16,8 @@ public class CountUpTimer extends Timer {
         if (isStopped()) {
             start.setValue(LocalDateTime.now());
             stopped.setValue(false);
+        } else {
+            throw new TimerStateException("timer has already been started");
         }
     }
 

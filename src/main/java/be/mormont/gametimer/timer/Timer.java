@@ -45,7 +45,7 @@ public abstract class Timer {
             duration.setValue(getTotalDuration());
             stopped.setValue(true);
         } else {
-            throw new TimerStateException("timer has already been started");
+            throw new TimerStateException("timer has already been stopped");
         }
     }
 
