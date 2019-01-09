@@ -1,7 +1,7 @@
 package be.mormont.gametimer;
 
 import be.mormont.gametimer.ui.FXMLBuilder;
-import be.mormont.gametimer.ui.TimersListController;
+import be.mormont.gametimer.ui.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -11,12 +11,13 @@ import javafx.util.Pair;
 
 import java.util.logging.Level;
 
+
 /**
  * Created by Romain on 28-06-17.
  * This is THE (main) class.
  */
 public class Main extends Application {
-    private static String ROOT_FXML = "/be/mormont/gametimer/ui/TimersList.fxml";
+    private static String ROOT_FXML = "/be/mormont/gametimer/ui/main.fxml";
 
     public static void main(String[] args) {
         try {
@@ -33,7 +34,7 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);
         });
-        Pair<Parent, TimersListController> rootScene = FXMLBuilder.build(ROOT_FXML);
+        Pair<Parent, MainController> rootScene = FXMLBuilder.build(ROOT_FXML);
         Scene scene = new Scene(rootScene.getKey());
         primaryStage.setScene(scene);
         primaryStage.show();
