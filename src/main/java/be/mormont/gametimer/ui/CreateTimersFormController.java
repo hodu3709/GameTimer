@@ -1,6 +1,9 @@
 package be.mormont.gametimer.ui;
 
 import be.mormont.gametimer.data.Player;
+import be.mormont.gametimer.timer.CountDownTimer;
+import be.mormont.gametimer.timer.CountUpTimer;
+import be.mormont.gametimer.timer.Timer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.util.Pair;
 
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -100,7 +104,18 @@ public class CreateTimersFormController implements Initializable {
 
         createButton.setText("Create");
         createButton.setOnMouseClicked(event -> {
-            handler.handle(new ArrayList<>(players));
+            ArrayList<Player> outPlayers = new ArrayList<>();
+            boolean useCountUp = timerTypeCombo.getSelectionModel().getSelectedItem() == TimerType.COUNT_UP;
+            Duration duration = Duration.ofSeconds(spinnerDurationHour.getValue() * 3600 + spinnerDurationMin.getValue() * 60 + spinnerDurationSec.getValue());
+            for (Player p: players) {
+                Timer timer = useCountUp ? new CountUpTimer() : new CountDownTimer(duration);
+                outPlayers.add(new Player(
+                    timer,
+                    p.getPlayerName(),
+                    p.getColor()
+                ));
+            }
+            handler.handle(outPlayers);
             FXMLModalHelper.closeModal(createButton.getParent());
         });
     }
