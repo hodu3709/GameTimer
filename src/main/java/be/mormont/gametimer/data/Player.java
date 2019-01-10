@@ -2,10 +2,7 @@ package be.mormont.gametimer.data;
 
 import be.mormont.gametimer.timer.CountUpTimer;
 import be.mormont.gametimer.timer.Timer;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
 
@@ -14,31 +11,30 @@ import javafx.scene.paint.Color;
  * By  : Mormont Romain
  */
 public class Player {
-    private IntegerProperty color;
+    private Property<Color> color;
     private Timer timer;
     private StringProperty playerName;
 
     public Player(Timer timer, String name, Color color) {
         this.timer = timer;
         this.playerName = new SimpleStringProperty(name);
-        this.color = new SimpleIntegerProperty(color.hashCode());
+        this.color = new SimpleObjectProperty<>(color);
+    }
+
+    public Player(String name) {
+        this(new CountUpTimer(), name, Color.WHITE);
     }
 
     public Player() {
-        this(new CountUpTimer(), "player", Color.WHITE);
+        this("player");
     }
 
     public Color getColor() {
-        int integerColor = color.getValue();
-        int red = (integerColor >> 24) % 256;
-        int green = (integerColor >> 16) % 256;
-        int blue = (integerColor >> 8) % 256;
-        int opacity = integerColor % 256;
-        return Color.rgb(red, green, blue, opacity);
+        return colorProperty().getValue();
     }
 
     public void setColor(Color color) {
-        this.color.setValue(color.hashCode());
+        colorProperty().setValue(color);
     }
 
     public Timer getTimer() {
@@ -61,7 +57,7 @@ public class Player {
         this.playerName.set(playerName);
     }
 
-    public IntegerProperty colorProperty() {
+    public Property<Color> colorProperty() {
         return color;
     }
 }

@@ -1,4 +1,23 @@
+/** {*/
+    /*-fx-font-family: Lato, Arial;*/
+    /*-fx-font-color: #FFFFFF;*/
+/*}*/
 
+AnchorPane, MenuBar, ListView {
+    -fx-background-color: #7EA16B;
+}
+
+.combo-box, .text-field, .color-picker, .spinner {
+    -fx-background-color: #C3D898;
+}
+
+.list-cell:odd {
+    -fx-background: #C3D898;
+}
+
+.list-cell:even {
+    -fx-background: #7EA16B;
+}
 
 .button {
     -fx-padding: 5px;
@@ -42,10 +61,22 @@
     -fx-opacity: 0.25;
 }
 
+.color-square {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+}
+
 .timer-label {
     -fx-font-size: 20pt;
 }
 
 .form-title {
     -fx-font-size: 20pt;
+    -fx-margin: 10px;
+    -fx-alignment: CENTER;
+}
+
+.custom-button {
+    -fx-background-color: #1c3144;
+    -fx-text-fill: white;
 }

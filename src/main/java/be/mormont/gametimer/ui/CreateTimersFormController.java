@@ -1,16 +1,17 @@
 package be.mormont.gametimer.ui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import be.mormont.gametimer.data.Player;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.util.Pair;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -25,6 +26,18 @@ public class CreateTimersFormController implements Initializable {
     @FXML public Spinner<Integer> spinnerDurationMin;
     @FXML public Spinner<Integer> spinnerDurationSec;
     @FXML public ComboBox<TimerType> timerTypeCombo;
+    @FXML public Label playerNameLabel;
+    @FXML public Label playerColorLabel;
+    @FXML public ColorPicker playerColorPicker;
+    @FXML public Label playerPanelTitle;
+    @FXML public TextField playerNameField;
+    @FXML public Button deletePlayerButton;
+    @FXML public Button newPlayerButton;
+    @FXML public ListView<Player> playerListView;
+    @FXML public Button createButton;
+
+    private ObservableList<Player> players;
+    private CreatePlayersHandler handler;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,26 +55,77 @@ public class CreateTimersFormController implements Initializable {
         spinnerDurationHour.setValueFactory(spinnerFactory(0, 9999, 1));
         spinnerDurationMin.setValueFactory(spinnerFactory(0, 59, 0));
         spinnerDurationSec.setValueFactory(spinnerFactory(0, 59, 0));
-//        spinnerDurationHour.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == -1) {
-//                spinnerDurationHour.increment();
-//                spinnerDurationMin.decrement(60);
-//            }
-//        });
-//        spinnerDurationMin.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == 60) {
-//                spinnerDurationHour.increment();
-//                spinnerDurationMin.decrement(60);
-//            } else if (newValue == -1) {
-//
-//            }
-//        });
-//        spinnerDurationSec.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == 60) {
-//                spinnerDurationMin.increment();
-//                spinnerDurationSec.decrement(60);
-//            }
-//        });
+
+        playerPanelTitle.setText("Player");
+        playerNameLabel.setText("Name");
+        playerColorLabel.setText("Color");
+
+        // list view
+        players = FXCollections.observableArrayList();
+        playerListView.setItems(players);
+        playerListView.selectionModelProperty().getValue().setSelectionMode(SelectionMode.SINGLE);
+
+        playerListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            deletePlayerButton.setDisable(newValue == null);
+            if (oldValue != null) {
+                oldValue.playerNameProperty().unbindBidirectional(playerNameField.textProperty());
+                oldValue.colorProperty().unbindBidirectional(playerColorPicker.valueProperty());
+            }
+            if (newValue != null) {
+                playerNameField.setText(newValue.getPlayerName());
+                newValue.playerNameProperty().bindBidirectional(playerNameField.textProperty());
+                playerColorPicker.setValue(newValue.getColor());
+                newValue.colorProperty().bindBidirectional(playerColorPicker.valueProperty());
+            }
+        });
+        playerListView.setCellFactory(param -> new PlayerListViewCell());
+
+        // buttons
+        deletePlayerButton.setText("Delete");
+        deletePlayerButton.setDisable(true);
+        deletePlayerButton.setOnMouseClicked(event -> {
+            int selected = playerListView.getSelectionModel().getSelectedIndex();
+            if (selected == -1) {
+                return;
+            }
+            playerListView.getItems().remove(selected);
+        });
+
+        newPlayerButton.setText("New");
+        newPlayerButton.setOnMouseClicked(event -> {
+            int size = players.size();
+            players.add(new Player("player" + (size + 1)));
+            playerListView.getSelectionModel().select(size);
+        });
+
+        createButton.setText("Create");
+        createButton.setOnMouseClicked(event -> {
+            handler.handle(new ArrayList<>(players));
+            FXMLModalHelper.closeModal(createButton.getParent());
+        });
+    }
+
+    public void setHandler(CreatePlayersHandler handler) {
+        this.handler = handler;
+    }
+
+    private SpinnerValueFactory.IntegerSpinnerValueFactory spinnerFactory(int min, int max, int initial) {
+        return new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initial);
+    }
+
+    public class PlayerListViewCell extends ListCell<Player>
+    {
+        @Override
+        protected void updateItem(Player item, boolean empty) {
+            super.updateItem(item, empty);
+            if(item == null || empty) {
+                setGraphic(null);
+                return;
+            }
+            Pair<Parent, PlayerListViewCellController> cell = FXMLBuilder.build("/be/mormont/gametimer/ui/player-list-view-cell.fxml");
+            cell.getValue().setPlayer(item);
+            setGraphic(cell.getKey());
+        }
     }
 
     public enum TimerType {
@@ -78,7 +142,8 @@ public class CreateTimersFormController implements Initializable {
         }
     }
 
-    private SpinnerValueFactory.IntegerSpinnerValueFactory spinnerFactory(int min, int max, int initial) {
-        return new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initial);
+    public interface CreatePlayersHandler {
+        void handle(List<Player> players);
     }
+
 }
