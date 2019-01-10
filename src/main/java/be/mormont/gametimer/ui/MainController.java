@@ -1,15 +1,11 @@
 package be.mormont.gametimer.ui;
 
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +15,7 @@ import java.util.ResourceBundle;
  * By  : Mormont Romain
  */
 public class MainController implements Initializable {
+    @FXML public MenuBar bar;
     @FXML public Menu timerMenu;
     @FXML public MenuItem newTimerMenuItem;
     @FXML public MenuItem openTimerMenuItem;
@@ -33,5 +30,8 @@ public class MainController implements Initializable {
         saveTimerMenuItem.setText("Save");
         exitMenuItem.setText("Exit");
         exitMenuItem.setOnAction(event -> Platform.exit());
+        Platform.runLater(() -> {
+            FXMLModalHelper.popModal("/be/mormont/gametimer/ui/create-timer-form.fxml", bar.getScene().getWindow());
+        });
     }
 }

@@ -18,6 +18,7 @@ import java.util.logging.Level;
  */
 public class Main extends Application {
     private static String ROOT_FXML = "/be/mormont/gametimer/ui/main.fxml";
+    private static String ROOT_CSS = "/be/mormont/gametimer/ui/style.css";
 
     public static void main(String[] args) {
         try {
@@ -36,8 +37,12 @@ public class Main extends Application {
         });
         Pair<Parent, MainController> rootScene = FXMLBuilder.build(ROOT_FXML);
         Scene scene = new Scene(rootScene.getKey());
-        scene.getStylesheets().add("/be/mormont/gametimer/ui/style.css");
+        scene.getStylesheets().add(ROOT_CSS);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static String getCssPath() {
+        return ROOT_CSS;
     }
 }
