@@ -36,6 +36,7 @@ public class Main extends Application {
         });
         Pair<Parent, MainController> rootScene = FXMLBuilder.build(ROOT_FXML);
         Scene scene = new Scene(rootScene.getKey());
+        scene.getStylesheets().add("/be/mormont/gametimer/ui/style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

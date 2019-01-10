@@ -1,0 +1,47 @@
+
+
+.button {
+    -fx-padding: 5px;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: rgba(100%, 100%, 100%, 0.75);
+    -fx-font-size: 11pt;
+}
+
+.button:pressed {
+    -fx-opacity: 0.5;
+    -fx-text-fill: black;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
+    -fx-text-fill: rgba(0, 0, 0, 0.5);
+}
+
+.timer-view {
+    -fx-max-height: 200px;
+    -fx-max-width: 200px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.timer-view-header {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+.timer-view-label {
+    -fx-padding: 5px;
+    -fx-font-size: 14pt;
+}
+
+.color-selector-square {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+}
+
+.color-selector-square:pressed {
+    -fx-opacity: 0.25;
+}
+
+.timer-label {
+    -fx-font-size: 20pt;
+}

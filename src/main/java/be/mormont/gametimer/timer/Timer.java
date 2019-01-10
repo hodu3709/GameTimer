@@ -80,7 +80,7 @@ public abstract class Timer {
     public String format() {
         Duration d = humanDuration();
         if (isExpired()) {
-            return "0:00:00:0.000";
+            return "00:00:00:0.000";
         } else {
             return String.format("%d:%02d:%02d.%03d", d.toHours(), d.toMinutes() % 60, d.getSeconds() % 60, d.toMillis() % 1000);
         }
@@ -98,7 +98,5 @@ public abstract class Timer {
         return stopped.getValue();
     }
 
-    public BooleanProperty stoppedProperty() {
-        return stopped;
-    }
+    public BooleanProperty stoppedProperty() { return stopped; }
 }

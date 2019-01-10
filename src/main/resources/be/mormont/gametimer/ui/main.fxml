@@ -24,6 +24,9 @@
               </menus>
             </MenuBar>
          </top>
+         <center>
+             <fx:include fx:id="characterDashboard" source="/be/mormont/gametimer/ui/TimerView.fxml" />
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
