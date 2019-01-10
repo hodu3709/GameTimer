@@ -4,6 +4,8 @@ import be.mormont.gametimer.data.Player;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -54,8 +56,9 @@ public class TimerViewController implements Initializable {
 
     private void changePlayer() {
         // color
-        updateColor(player.getColor());
-
+        player.colorProperty().addListener((observable, oldValue, newValue) -> {
+            updateColor(player.getColor());
+        });
 
         // timer name
         timerNameLabel.textProperty().bindBidirectional(player.playerNameProperty());
@@ -75,7 +78,6 @@ public class TimerViewController implements Initializable {
             }
         };
         refreshTimer.start();
-
     }
 
     private void updateButtonsState(boolean timerStopped) {

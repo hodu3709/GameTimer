@@ -2,6 +2,8 @@ package be.mormont.gametimer.data;
 
 import be.mormont.gametimer.timer.CountUpTimer;
 import be.mormont.gametimer.timer.Timer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
@@ -12,14 +14,14 @@ import javafx.scene.paint.Color;
  * By  : Mormont Romain
  */
 public class Player {
-    private Color color;
+    private IntegerProperty color;
     private Timer timer;
     private StringProperty playerName;
 
     public Player(Timer timer, String name, Color color) {
         this.timer = timer;
         this.playerName = new SimpleStringProperty(name);
-        this.color = color;
+        this.color = new SimpleIntegerProperty(color.hashCode());
     }
 
     public Player() {
@@ -27,11 +29,16 @@ public class Player {
     }
 
     public Color getColor() {
-        return color;
+        int integerColor = color.getValue();
+        int red = (integerColor >> 24) % 256;
+        int green = (integerColor >> 16) % 256;
+        int blue = (integerColor >> 8) % 256;
+        int opacity = integerColor % 256;
+        return Color.rgb(red, green, blue, opacity);
     }
 
     public void setColor(Color color) {
-        this.color = color;
+        this.color.setValue(color.hashCode());
     }
 
     public Timer getTimer() {
@@ -52,5 +59,9 @@ public class Player {
 
     public void setPlayerName(String playerName) {
         this.playerName.set(playerName);
+    }
+
+    public IntegerProperty colorProperty() {
+        return color;
     }
 }
