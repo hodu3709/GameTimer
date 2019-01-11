@@ -68,7 +68,8 @@ public class TimerViewController implements Initializable {
         // buttons
         playButton.setText("Play");
         pauseButton.setText("Pause");
-        player.getTimer().stoppedProperty().addListener((observable, oldValue, newValue) -> updateButtonsState(newValue));
+        playButton.disableProperty().bind(disabled.or(player.getTimer().stoppedProperty().not()));
+        pauseButton.disableProperty().bind(disabled.or(player.getTimer().stoppedProperty()));
         playButton.setOnMouseClicked(event -> { if (!player.getTimer().isStopped()) return; player.getTimer().start(); });
         pauseButton.setOnMouseClicked(event -> { if (player.getTimer().isStopped()) return; player.getTimer().stop(); });
 

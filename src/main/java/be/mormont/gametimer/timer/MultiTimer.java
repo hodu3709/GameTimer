@@ -61,4 +61,8 @@ public class MultiTimer {
         select((selected.getValue() + 1) % timers.size());
         start();
     }
+
+    public SimpleIntegerProperty selectedProperty() {
+        return selected;
+    }
 }
