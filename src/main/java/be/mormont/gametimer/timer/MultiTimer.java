@@ -58,11 +58,21 @@ public class MultiTimer {
      * Stops current timer, and starts the next one
      */
     public void next() {
+        boolean wasRunning = !selectedTimer().isStopped();
+        if (wasRunning) {
+            stop();
+        }
         select((selected.getValue() + 1) % timers.size());
-        start();
+        if (wasRunning) {
+            start();
+        }
     }
 
     public SimpleIntegerProperty selectedProperty() {
         return selected;
+    }
+
+    private Timer selectedTimer() {
+        return timers.get(selected.getValue());
     }
 }

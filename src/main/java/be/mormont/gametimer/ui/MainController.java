@@ -5,25 +5,24 @@ import be.mormont.gametimer.data.Player;
 import be.mormont.gametimer.timer.MultiTimer;
 import be.mormont.gametimer.timer.Timer;
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +39,8 @@ public class MainController implements Initializable {
     @FXML public HBox timersBox;
     @FXML public Button pauseAllButton;
     @FXML public Button startAllButton;
+    @FXML public Button nextButton;
+    @FXML public Label currentPlayerLabel;
 
     private ObservableList<Player> players;
     private ObservableList<TimerViewController> controllers;
@@ -64,13 +65,17 @@ public class MainController implements Initializable {
         players = FXCollections.observableArrayList();
         controllers = FXCollections.observableArrayList();
 
+        pauseAllButton.setText("Pause");
+        pauseAllButton.setOnMouseClicked(event -> multiTimer.stop());
+        startAllButton.setText("Play");
+        startAllButton.setOnMouseClicked(event -> multiTimer.start());
+        nextButton.setText("Next");
+        nextButton.setOnMouseClicked(event -> multiTimer.next());
     }
 
     private void resetView() {
         timersBox.getChildren().clear();
         controllers.clear();
-        pauseAllButton.setDisable(true);
-        startAllButton.setDisable(false);
     }
 
     private void resetPlayers() {
@@ -80,10 +85,13 @@ public class MainController implements Initializable {
         resetView();
 
         // create multi timer
-        Timer[] timers = new Timer[players.size()];
+        List<Timer> timersList = players.stream().map(Player::getTimer).collect(Collectors.toList());
+        Timer[] timers = timersList.toArray(new Timer[players.size()]);
         int selected = new Random().nextInt(players.size());
-        players.stream().map(Player::getTimer).collect(Collectors.toList()).toArray(timers);
         multiTimer = new MultiTimer(selected, timers);
+        multiTimer.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            currentPlayerLabel.setText(players.get(newValue.intValue()).getPlayerName());
+        });
 
         for (int i = 0; i < players.size(); ++i) {
             Pair<Parent, TimerViewController> pc = FXMLBuilder.build("/be/mormont/gametimer/ui/timer-view.fxml");
@@ -102,5 +110,16 @@ public class MainController implements Initializable {
         }
         // to make sure components are update
         controllers = FXCollections.observableArrayList(controllers);
+
+        BooleanExpression startableExpression = timers[0].stoppedProperty();
+        BooleanExpression stoppableExpression = timers[0].stoppedProperty().not();
+
+        for (int i = 1; i < timers.length; ++i) {
+            startableExpression = startableExpression.and(timers[i].stoppedProperty());
+            stoppableExpression = stoppableExpression.or(timers[i].stoppedProperty().not());
+        }
+
+        startAllButton.disableProperty().bind(startableExpression.not());
+        pauseAllButton.disableProperty().bind(stoppableExpression.not());
     }
 }

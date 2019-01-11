@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane focusTraversable="true" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.mormont.gametimer.ui.CreateTimersFormController">
+<AnchorPane styleClass="custom-bg" focusTraversable="true" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.mormont.gametimer.ui.CreateTimersFormController">
     <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="60.0" />
@@ -73,7 +73,8 @@
                     <Insets left="5.0" right="5.0" />
                 </padding>
             </ButtonBar>
-            <ListView fx:id="playerListView" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+
+            <ListView fx:id="playerListView" GridPane.columnSpan="2" GridPane.rowIndex="7" styleClass="custom-bg" />
 
             <ButtonBar GridPane.rowIndex="8" GridPane.columnSpan="2">
                 <buttons>

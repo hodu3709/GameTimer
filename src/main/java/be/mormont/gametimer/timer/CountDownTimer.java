@@ -38,7 +38,11 @@ public class CountDownTimer extends Timer {
     }
 
     private Duration getRemainingDuration() {
-        return initial.getValue().minus(duration.getValue());
+        Duration elapsed = initial.getValue().minus(duration.getValue());
+        if (!isStopped()) {
+            return elapsed.minus(Duration.between(start.getValue(), LocalDateTime.now()));
+        }
+        return elapsed;
     }
 
     @Override
