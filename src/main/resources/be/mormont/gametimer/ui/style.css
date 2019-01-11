@@ -3,9 +3,9 @@
     /*-fx-font-color: #FFFFFF;*/
 /*}*/
 
-AnchorPane, MenuBar, ListView {
-    -fx-background-color: #7EA16B;
-}
+/*AnchorPane, MenuBar, ListView {*/
+    /*-fx-background-color: #7EA16B;*/
+/*}*/
 
 .combo-box, .text-field, .color-picker, .spinner {
     -fx-background-color: #C3D898;

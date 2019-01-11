@@ -1,5 +1,6 @@
 package be.mormont.gametimer.ui;
 
+import be.mormont.gametimer.ColorUtil;
 import be.mormont.gametimer.data.Player;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
@@ -56,6 +57,7 @@ public class TimerViewController implements Initializable {
 
     private void changePlayer() {
         // color
+        updateColor(player.getColor());
         player.colorProperty().addListener((observable, oldValue, newValue) -> {
             updateColor(player.getColor());
         });
@@ -90,8 +92,12 @@ public class TimerViewController implements Initializable {
     }
 
     private void updateColor(Color newColor) {
-        BackgroundFill fill = new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY);
-        pane.setBackground(new Background(fill));
+        String hexColor = ColorUtil.hexCode(newColor);
+        String hexFill = ColorUtil.hexCode(ColorUtil.getTextFill(newColor));
+        String textFillStyle = "-fx-text-fill: " + hexFill + ";";
+        pane.setStyle("-fx-background-color: " + hexColor + ";");
+        timerLabel.setStyle(textFillStyle);
+        timerNameLabel.setStyle(textFillStyle);
         colorRectangle.setFill(newColor);
     }
 }
