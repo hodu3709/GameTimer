@@ -66,11 +66,11 @@ public class MainController implements Initializable {
         controllers = FXCollections.observableArrayList();
 
         pauseAllButton.setText("Pause");
-        pauseAllButton.setOnMouseClicked(event -> multiTimer.stop());
+        pauseAllButton.setOnMouseClicked(event -> { if (multiTimer != null) multiTimer.stop(); });
         startAllButton.setText("Play");
-        startAllButton.setOnMouseClicked(event -> multiTimer.start());
+        startAllButton.setOnMouseClicked(event -> { if (multiTimer != null) multiTimer.start(); });
         nextButton.setText("Next");
-        nextButton.setOnMouseClicked(event -> multiTimer.next());
+        nextButton.setOnMouseClicked(event -> { if (multiTimer != null) multiTimer.next(); });
     }
 
     private void resetView() {
@@ -89,6 +89,7 @@ public class MainController implements Initializable {
         Timer[] timers = timersList.toArray(new Timer[players.size()]);
         int selected = new Random().nextInt(players.size());
         multiTimer = new MultiTimer(selected, timers);
+        currentPlayerLabel.setText(players.get(selected).getPlayerName());
         multiTimer.selectedProperty().addListener((observable, oldValue, newValue) -> {
             currentPlayerLabel.setText(players.get(newValue.intValue()).getPlayerName());
         });
