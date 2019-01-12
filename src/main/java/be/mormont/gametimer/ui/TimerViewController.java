@@ -32,9 +32,11 @@ public class TimerViewController implements Initializable {
     @FXML public Button playButton;
     @FXML public Button pauseButton;
     @FXML public Label timerLabel;
-    @FXML public Rectangle colorRectangle;
+    //@FXML public Rectangle colorRectangle;
     @FXML public AnchorPane pane;
     @FXML public Label timerNameLabel;
+    @FXML public Button moveLeftButton;
+    @FXML public Button moveRightButton;
 
     private BooleanProperty disabled;
     private AnimationTimer refreshTimer;
@@ -99,6 +101,14 @@ public class TimerViewController implements Initializable {
         pane.setStyle("-fx-background-color: " + hexColor + ";");
         timerLabel.setStyle(textFillStyle);
         timerNameLabel.setStyle(textFillStyle);
-        colorRectangle.setFill(newColor);
+        //colorRectangle.setFill(newColor);
+    }
+
+    public Button getMoveLeftButton() {
+        return moveLeftButton;
+    }
+
+    public Button getMoveRightButton() {
+        return moveRightButton;
     }
 }

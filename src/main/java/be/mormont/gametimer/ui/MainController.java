@@ -106,6 +106,11 @@ public class MainController implements Initializable {
             // set up controller
             controllers.add(controller);
             controller.setPlayer(players.get(i));
+            final int currIndex = i;
+            controller.getMoveLeftButton().setDisable(i == 0);
+            controller.getMoveLeftButton().setOnMouseClicked(event -> swapPlayers(currIndex, currIndex-1));
+            controller.getMoveRightButton().setDisable(i == players.size() - 1);
+            controller.getMoveRightButton().setOnMouseClicked(event -> swapPlayers(currIndex, currIndex+1));
             controller.disabledProperty().bind(multiTimer.selectedProperty().isNotEqualTo(i));
             timers[i] = players.get(i).getTimer();
         }
@@ -122,5 +127,12 @@ public class MainController implements Initializable {
 
         startAllButton.disableProperty().bind(startableExpression.not());
         pauseAllButton.disableProperty().bind(stoppableExpression.not());
+    }
+
+    public void swapPlayers(int index1, int index2) {
+        Player tmp = players.get(index1);
+        players.set(index1, players.get(index2));
+        players.set(index2, tmp);
+        resetPlayers();
     }
 }

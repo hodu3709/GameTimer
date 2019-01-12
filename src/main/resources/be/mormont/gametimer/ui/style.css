@@ -95,3 +95,9 @@
     -fx-font-size: 35pt;
     -fx-alignment: center;
 }
+
+.left-right-button {
+    -fx-padding: 1px;
+    -fx-width: 6px;
+    -fx-height: 6px;
+}
