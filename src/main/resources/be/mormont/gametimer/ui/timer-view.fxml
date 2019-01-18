@@ -8,47 +8,58 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.layout.HBox?>
 <AnchorPane fx:id="pane" styleClass="timer-view" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.mormont.gametimer.ui.TimerViewController">
    <children>
-      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <BorderPane BorderPane.alignment="CENTER">
-               <bottom>
-                  <ButtonBar BorderPane.alignment="CENTER">
-                    <buttons>
-                      <Button fx:id="playButton" mnemonicParsing="false" />
-                      <Button fx:id="pauseButton" mnemonicParsing="false" />
-                    </buttons>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </ButtonBar>
-               </bottom>
-               <top>
-                  <BorderPane styleClass="timer-view-header" BorderPane.alignment="CENTER">
-                     <left>
-                           <Label fx:id="timerNameLabel" styleClass="timer-view-label" text="Label" BorderPane.alignment="CENTER" />
-                     </left>
-                     <right>
-                           <Rectangle fx:id="colorRectangle" height="10.0" styleClass="color-selector-square" width="10.0" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </BorderPane.margin></Rectangle>
-                     </right>
-                  </BorderPane>
-               </top>
-               <center>
-                  <AnchorPane BorderPane.alignment="CENTER">
-                     <children>
-                          <Label fx:id="timerLabel" alignment="CENTER" styleClass="timer-label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding></Label>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-         </center>
-      </BorderPane>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+        <bottom>
+          <ButtonBar BorderPane.alignment="CENTER">
+            <buttons>
+              <Button fx:id="playButton" mnemonicParsing="false" />
+              <Button fx:id="pauseButton" mnemonicParsing="false" />
+            </buttons>
+             <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+             </padding>
+          </ButtonBar>
+        </bottom>
+        <top>
+          <BorderPane styleClass="timer-view-header" BorderPane.alignment="CENTER">
+             <left>
+                   <Label fx:id="timerNameLabel" styleClass="timer-view-label" text="Label" BorderPane.alignment="CENTER" />
+             </left>
+             <right>
+               <HBox>
+                   <children>
+                       <Button fx:id="moveLeftButton" text="&lt;" styleClass="left-right-button">
+                           <HBox.margin>
+                               <Insets bottom="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                       </Button>
+                       <Button fx:id="moveRightButton" text="&gt;" styleClass="left-right-button">
+                           <HBox.margin>
+                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                       </Button>
+                       <!--<Rectangle fx:id="colorRectangle" height="10.0" styleClass="color-selector-square" width="10.0" BorderPane.alignment="CENTER">
+                       <HBox.margin>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                       </HBox.margin></Rectangle>-->
+                   </children>
+               </HBox>
+             </right>
+          </BorderPane>
+        </top>
+        <center>
+          <AnchorPane BorderPane.alignment="CENTER">
+             <children>
+                  <Label fx:id="timerLabel" alignment="CENTER" styleClass="timer-label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                   <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                   </padding></Label>
+             </children>
+          </AnchorPane>
+        </center>
+        </BorderPane>
    </children>
 </AnchorPane>

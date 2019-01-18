@@ -31,7 +31,6 @@
          <left>
              <VBox alignment="TOP_CENTER" minWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
                  <children>
-                    <Label fx:id="currentPlayerLabel"/>
                     <Button fx:id="startAllButton" styleClass="custom-button" />
                     <Button fx:id="pauseAllButton" styleClass="custom-button" />
                     <Button fx:id="nextButton" styleClass="custom-button" />
@@ -45,10 +44,18 @@
              </VBox>
          </left>
          <center>
-             <HBox fx:id="timersBox" spacing="20.0" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding></HBox>
+             <BorderPane>
+                <top>
+                    <AnchorPane><Label fx:id="currentPlayerLabel" styleClass="current-player-label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/></AnchorPane>
+                </top>
+                <center>
+                    <HBox fx:id="timersBox" spacing="20.0" BorderPane.alignment="CENTER">
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                    </HBox>
+                </center>
+             </BorderPane>
          </center>
       </BorderPane>
    </children>

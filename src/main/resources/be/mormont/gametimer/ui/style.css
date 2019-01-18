@@ -43,6 +43,8 @@
 }
 
 .timer-view {
+    -fx-min-height: 200px;
+    -fx-min-width: 200px;
     -fx-max-height: 200px;
     -fx-max-width: 200px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
@@ -85,4 +87,17 @@
 .custom-button {
     -fx-background-color: #1c3144;
     -fx-text-fill: white;
+}
+
+.current-player-label {
+    -fx-margin-top: 40px;
+    -fx-margin-bottom: 40px;
+    -fx-font-size: 35pt;
+    -fx-alignment: center;
+}
+
+.left-right-button {
+    -fx-padding: 1px;
+    -fx-width: 6px;
+    -fx-height: 6px;
 }
