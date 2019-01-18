@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -38,6 +39,7 @@ public class Main extends Application {
         Pair<Parent, MainController> rootScene = FXMLBuilder.build(ROOT_FXML);
         Scene scene = new Scene(rootScene.getKey());
         scene.getStylesheets().add(ROOT_CSS);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, rootScene.getValue().getKeyPressedEvent());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

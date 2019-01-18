@@ -58,11 +58,43 @@ public class MultiTimer {
      * Stops current timer, and starts the next one
      */
     public void next() {
+        switchTo((selected.getValue() + 1) % timers.size());
+    }
+
+    /**
+     * Stops current timer, and starts the prev one
+     */
+    public void prev() {
+        int prev = selected.getValue() - 1;
+        switchTo(prev < 0 ? timers.size() - 1 : prev);
+    }
+
+    /**
+     * Start the multi timer if it is stopped, stops it otherwise.
+     */
+    public void invertMode() {
+        if (selectedTimer().isStopped()) {
+            start();
+        } else {
+            stop();
+        }
+    }
+
+    /**
+     * Switch from the selected timer to another
+     * @param i Index of the other timer
+     */
+    private void switchTo(int i) {
+        if (i < 0 || i >= timers.size()) {
+            throw new IndexOutOfBoundsException("This timer does not exist (#" + (i + 1) + " among " + timers.size() + " timers).");
+        } else if (selected.getValue() == i) {
+            return;
+        }
         boolean wasRunning = !selectedTimer().isStopped();
         if (wasRunning) {
             stop();
         }
-        select((selected.getValue() + 1) % timers.size());
+        select(i);
         if (wasRunning) {
             start();
         }
